@@ -1,0 +1,26 @@
+# geoprumo/backend/requirements.txt
+
+# --- Framework da API ---
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-dotenv>=1.0.1
+pydantic-settings>=2.2.1
+
+# --- Processamento de Dados ---
+pandas>=2.2.0
+openpyxl>=3.1.0
+
+# --- Lógica de Otimização ---
+ortools>=9.9.0
+
+# --- APIs Externas e Geocodificação ---
+requests>=2.31.0
+lxml>=5.2.0
+gpxpy>=1.5.0
+
+# --- Inteligência Artificial ---
+google-generativeai>=0.5.4
+
+# --- Utilitários ---
+python-multipart>=0.0.9 # Para upload de arquivos com FastAPI
+utm>=0.7.0               # <-- NOVA BIBLIOTECA PARA CONVERSÃO UTM

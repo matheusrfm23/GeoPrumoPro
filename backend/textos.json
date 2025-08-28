@@ -1,0 +1,33 @@
+{
+  "sucesso": {
+    "rota_otimizada": "Rota otimizada com sucesso!",
+    "pontos_processados": "{count} pontos processados com sucesso!",
+    "dados_enriquecidos": "Dados enriquecidos com sucesso pela IA!",
+    "nomes_padronizados": "Nomes padronizados com sucesso pela IA!",
+    "nenhuma_duplicata": "Nenhuma duplicata provável encontrada pela IA."
+  },
+  "erro": {
+    "erro_inesperado": "Ocorreu um erro inesperado no servidor: {detalhes}",
+    "nenhum_dado_enviado": "Nenhum dado (arquivo, link ou texto) foi enviado para processamento.",
+    "formato_nao_suportado": "O formato do arquivo '{filename}' não é suportado.",
+    "nenhum_dado_encontrado": "Nenhum dado ou ponto válido foi encontrado nas fontes fornecidas.",
+    "nenhum_ponto_valido_apos_limpeza": "Dados encontrados, mas nenhum ponto com coordenadas válidas restou após a limpeza.",
+    "api_key_ausente": "A chave da API para o serviço '{servico}' não foi configurada no servidor.",
+    "falha_api_externa": "A comunicação com a API do {servico} falhou: {detalhes}",
+    "resposta_api_inesperada": "A resposta da API do {servico} veio em um formato inesperado.",
+    "pontos_insuficientes": "São necessários pelo menos 2 pontos válidos para realizar a otimização.",
+    "link_invalido": "O link fornecido ({tipo}) é inválido ou não foi possível acessá-lo.",
+    "arquivo_vazio": "O arquivo do {tipo} foi baixado, mas está vazio ou em formato não reconhecido.",
+    "acesso_negado_drive": "Acesso negado. Verifique se o link do Google Drive está compartilhado como 'Qualquer pessoa com o link'."
+  },
+  "aviso": {
+    "mapeamento_manual_necessario": "Não foi possível detectar automaticamente as colunas de coordenadas. É necessário mapeamento manual.",
+    "duplicatas_encontradas": "Atenção: Foram encontradas as seguintes duplicatas em potencial. Use a interface para selecionar e remover os pontos que desejar."
+  },
+  "info_logs": {
+    "iniciando_processamento": "Iniciando processamento de {files_count} arquivos, {links_count} links e {texts_count} textos.",
+    "consolidacao_concluida": "Consolidação de dados concluída. Total de {total_points} pontos brutos encontrados.",
+    "iniciando_enriquecimento_ia": "Iniciando enriquecimento de dados com IA para {points_count} pontos.",
+    "iniciando_otimizacao": "Iniciando otimização {modo} para {points_count} pontos."
+  }
+}

@@ -1,0 +1,43 @@
+/* geoprumo/frontend/src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos aplicados apenas durante a impressão */
+@media print {
+  /* Esconde o cabeçalho e a coluna de controles inteira */
+  header, .print-hide {
+    display: none !important;
+  }
+
+  /* Faz a coluna do mapa/lista ocupar toda a página */
+  .print-container {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  
+  /* Garante que o container principal não restrinja o conteúdo */
+  main {
+    display: block !important;
+    height: auto !important;
+  }
+  
+  /* Remove a sombra e borda dos painéis na impressão */
+  .print-panel {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+
+  /* Garante que o mapa não fique com uma altura fixa pequena */
+  .print-map-container > div {
+    height: 400px !important; 
+  }
+
+  /* Evita que a lista de pontos quebre no meio de um item */
+  li {
+    page-break-inside: avoid;
+  }
+}

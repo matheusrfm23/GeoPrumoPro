@@ -1,0 +1,29 @@
+GeoPrumo
+
+
+
+Backend
+
+cd C:\Users\mathe\Desktop\GeoPrumoPro\backend
+
+python -m uvicorn main:app --reload
+
+uvicorn app.main:app --reload
+
+
+frontend
+
+cd C:\Users\mathe\Desktop\GeoPrumoPro\frontend
+
+npm run dev
+
+npm start
+
+npx serve -s build
+
+
+return (
+    <div className="app-container">
+      <header className="app-header">
+        <img src="/GeoPrumo completa.png" alt="Logo GeoPrumo" className="header-logo" />
+      </header>
