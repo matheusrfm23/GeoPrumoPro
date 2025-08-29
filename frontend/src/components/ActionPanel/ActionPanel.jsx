@@ -1,6 +1,7 @@
 // geoprumo/frontend/src/components/ActionPanel/ActionPanel.jsx (versão final)
 
 import React from 'react';
+import GoogleMapsLinks from './GoogleMapsLinks';
 
 const DownloadIcon = () => (
   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -8,7 +9,7 @@ const DownloadIcon = () => (
   </svg>
 );
 
-function ActionPanel({ summary, onExport }) {
+function ActionPanel({ summary, onExport, onGenerateMapsLinks, googleMapsLinks }) {
   if (!summary) return null;
 
   const exportFormats = ['csv', 'kml', 'gpx', 'geojson'];
@@ -28,6 +29,19 @@ function ActionPanel({ summary, onExport }) {
         </div>
       </div>
       
+      {/* Botão para Gerar Links do Google Maps */}
+      <button
+        onClick={onGenerateMapsLinks}
+        className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 flex items-center justify-center transition-colors mb-4 text-base"
+      >
+        Gerar Links de Navegação (Google Maps)
+      </button>
+
+      {/* Componente que exibe os links gerados */}
+      <GoogleMapsLinks links={googleMapsLinks} />
+      
+      <div className="border-t my-4"></div>
+
       {/* Botão de Destaque para My Maps */}
       <button
         onClick={() => onExport('mymaps')}

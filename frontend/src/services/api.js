@@ -83,3 +83,14 @@ export const autocompleteAddress = async (query) => {
     return []; // Retorna vazio em caso de erro
   }
 };
+
+export const getGoogleMapsLinks = async (points) => {
+  try {
+    const response = await apiClient.post('/export/google-maps-links', points);
+    return response.data;
+  } catch (error) {
+    if (error.response) throw new Error(error.response.data.detail || 'Erro ao gerar links do Google Maps.');
+    if (error.request) throw new Error('Não foi possível se comunicar com o servidor.');
+    throw new Error('Erro ao preparar a requisição para gerar links.');
+  }
+};

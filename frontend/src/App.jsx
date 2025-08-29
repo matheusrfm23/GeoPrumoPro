@@ -7,7 +7,7 @@ import MapView from './components/MapView/MapView';
 import ActionPanel from './components/ActionPanel/ActionPanel';
 import ManualAdd from './components/ManualAdd/ManualAdd';
 import useSessionStorage from './hooks/useSessionStorage';
-import { optimizeRouteData, enrichRouteWithAI, exportRouteFile, geocodeSearch } from './services/api';
+import { optimizeRouteData, enrichRouteWithAI, exportRouteFile, geocodeSearch, getGoogleMapsLinks } from './services/api';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +16,21 @@ function App() {
   const [error, setError] = useState(null);
   const [pendingData, setPendingData] = useState({ files: [], links: [], texts: [] });
   const [needsReoptimization, setNeedsReoptimization] = useState(false);
+  const [googleMapsLinks, setGoogleMapsLinks] = useState([]);
+
+  const handleGenerateMapsLinks = async () => {
+    if (!optimizedData || !optimizedData.optimized_route) return;
+    setError(null);
+    try {
+      // Filtra apenas os pontos ativos para enviar para a geração de links
+      const activePoints = optimizedData.optimized_route.filter(p => p.active !== false);
+      const urls = await getGoogleMapsLinks(activePoints);
+      setGoogleMapsLinks(urls);
+    } catch (err) {
+      setError(err.message);
+      setGoogleMapsLinks([]); // Limpa os links em caso de erro
+    }
+  };
 
   const handleAddData = (payload) => {
     setPendingData(prevData => ({
@@ -118,7 +133,7 @@ function App() {
         </button>
       </header>
 
-      <main className="flex-grow container mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4" style={{ height: 'calc(100vh - 80px)' }}>
+      <main className="flex-grow container mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-80px)]">
         {/* CORREÇÃO: Layout flexível para a coluna da esquerda */}
         <div className="flex flex-col space-y-4">
           <div className="flex-shrink-0 bg-white p-4 rounded-lg shadow-md">
@@ -154,10 +169,19 @@ function App() {
             />
           </div>
           
-          {hasOptimizedData && <div className="flex-shrink-0"><ActionPanel summary={optimizedData.summary} onExport={handleExport} /></div>}
+          {hasOptimizedData && (
+            <div className="flex-shrink-0">
+              <ActionPanel
+                summary={optimizedData.summary}
+                onExport={handleExport}
+                onGenerateMapsLinks={handleGenerateMapsLinks}
+                googleMapsLinks={googleMapsLinks}
+              />
+            </div>
+          )}
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md">
+        <div className="h-96 lg:h-full bg-white p-4 rounded-lg shadow-md">
           <MapView data={optimizedData} />
         </div>
       </main>

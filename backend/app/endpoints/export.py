@@ -48,3 +48,19 @@ def export_route(file_format: str, points: List[Point] = Body(...)):
 
     else:
         raise HTTPException(status_code=404, detail=f"Formato de arquivo '{file_format}' não suportado.")
+
+
+@router.post("/google-maps-links", response_model=List[str])
+def get_google_maps_links(points: List[Point] = Body(...)):
+    """
+    Gera e retorna uma lista de URLs do Google Maps para a rota otimizada.
+    """
+    if not points:
+        raise HTTPException(status_code=400, detail="A lista de pontos não pode estar vazia.")
+
+    try:
+        points_dict = [p.dict() for p in points]
+        urls = exporter.generate_google_maps_links(points_dict)
+        return urls
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar links do Google Maps: {e}")

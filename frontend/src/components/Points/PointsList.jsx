@@ -35,40 +35,60 @@ function PointsList({ route, onEnrich, isEnriching, onDelete, onToggleActive }) 
       </div>
 
       <div className="overflow-y-auto flex-grow">
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {route.map((point) => (
-            <li 
-              key={`${point.original_index}-${point.order}`} 
-              className={`p-3 rounded-lg shadow-sm border transition-opacity ${point.active === false ? 'opacity-50 bg-gray-100' : 'bg-white border-gray-200'}`}
+            <li
+              key={`${point.original_index}-${point.order}`}
+              className={`rounded-lg shadow-md border transition-all duration-300 ${point.active === false ? 'bg-gray-100 border-gray-200' : 'bg-white border-white'}`}
             >
-              <div className="flex items-start">
-                <span className={`text-white rounded-full h-7 w-7 text-base flex-shrink-0 flex items-center justify-center font-bold mr-3 ${point.active === false ? 'bg-gray-400' : 'bg-blue-500'}`}>
-                  {point.order}
-                </span>
-                <div className="flex-grow">
-                  <p className="font-semibold text-gray-800 break-words">{point.name}</p>
-                  <p className="text-xs text-gray-500">
-                    Lat: {point.latitude.toFixed(5)}, Lon: {point.longitude.toFixed(5)}
-                  </p>
-                  {point.address && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      <strong>Endereço:</strong> {point.address}
-                    </p>
-                  )}
-                   {point.category && (
-                     <p className="text-xs text-gray-600 mt-1">
-                      <strong>Categoria:</strong> {point.category}
-                    </p>
-                  )}
+              {/* Card Header */}
+              <div className={`p-3 border-b border-gray-200 flex justify-between items-start ${point.active === false ? 'opacity-60' : ''}`}>
+                <div className="flex items-center gap-3">
+                  <span className={`text-white rounded-full h-8 w-8 text-base flex-shrink-0 flex items-center justify-center font-bold transition-colors ${point.active === false ? 'bg-gray-400' : 'bg-blue-600'}`}>
+                    {point.order}
+                  </span>
+                  <p className="font-semibold text-gray-900 break-words">{point.name}</p>
                 </div>
-                <div className="flex items-center space-x-3 ml-2">
-                  <button onClick={() => onToggleActive(point.original_index)} className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors ${point.active === false ? 'bg-gray-300' : 'bg-green-500'}`}>
+                <button onClick={() => onDelete(point.original_index)} className="text-gray-400 hover:text-red-600 transition-colors">
+                  <TrashIcon />
+                </button>
+              </div>
+
+              {/* Card Body */}
+              <div className={`p-3 text-sm space-y-2 ${point.active === false ? 'opacity-60' : ''}`}>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Coordenadas:</span>
+                  <span className="font-mono text-gray-700">
+                    {point.latitude.toFixed(5)}, {point.longitude.toFixed(5)}
+                  </span>
+                </div>
+                {point.address && (
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-gray-500 flex-shrink-0">Endereço:</span>
+                    <span className="text-right text-gray-700">{point.address}</span>
+                  </div>
+                )}
+                {point.category && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Categoria:</span>
+                    <span className="text-right text-gray-700">{point.category}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card Footer */}
+              <div className="p-3 bg-gray-50 rounded-b-lg flex justify-end items-center">
+                <label className="flex items-center cursor-pointer">
+                  <span className={`text-sm font-medium mr-3 transition-colors ${point.active === false ? 'text-gray-500' : 'text-gray-700'}`}>
+                    {point.active === false ? 'Inativo' : 'Ativo'}
+                  </span>
+                  <button 
+                    onClick={() => onToggleActive(point.original_index)} 
+                    className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${point.active === false ? 'bg-gray-300' : 'bg-green-500'}`}
+                  >
                     <span className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${point.active === false ? 'translate-x-1' : 'translate-x-6'}`} />
                   </button>
-                  <button onClick={() => onDelete(point.original_index)} className="text-red-500 hover:text-red-700">
-                    <TrashIcon />
-                  </button>
-                </div>
+                </label>
               </div>
             </li>
           ))}

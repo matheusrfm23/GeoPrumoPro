@@ -101,3 +101,32 @@ class Exporter:
         df_mymaps = df_mymaps[[col for col in cols_to_keep if col in df_mymaps.columns]]
         
         return df_mymaps.to_csv(index=False, encoding='utf-8-sig')
+
+    def generate_google_maps_links(self, points: List[Dict[str, Any]]) -> List[str]:
+        """
+        Gera uma lista de links do Google Maps, dividindo a rota em pedaços
+        de no máximo 10 pontos e começando da localização atual do usuário.
+        """
+        if not points:
+            return []
+
+        # A localização atual é o ponto de partida geral
+        locations = ["My+Location"] + [f"{p['latitude']},{p['longitude']}" for p in points]
+        
+        urls = []
+        # O tamanho do chunk é 10 (1 origem, 8 waypoints, 1 destino)
+        chunk_size = 10
+        
+        # Iteramos sobre a lista de localizações, pulando de 9 em 9
+        # porque cada novo link começa do último ponto do link anterior.
+        for i in range(0, len(locations), chunk_size - 1):
+            chunk = locations[i:i + chunk_size]
+            if len(chunk) < 2:
+                continue # Não é possível criar uma rota com menos de 2 pontos
+            
+            # Constrói a URL com as localizações do chunk
+            # Formato: https://www.google.com/maps/dir/loc1/loc2/loc3...
+            url = "https://www.google.com/maps/dir/" + "/".join(chunk)
+            urls.append(url)
+            
+        return urls
